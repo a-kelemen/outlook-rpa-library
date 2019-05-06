@@ -15,9 +15,6 @@ class ReaderKeywords(Base):
 		inbox = Base._get_inbox_folder()
 		messages = inbox.Items
 		messages.Sort("[ReceivedTime]", True)
-		# print("utolso email bodyja:")
-		# print("utolso email ideje:" + str(messages[0].ReceivedTime))
-		# print(Base._get_sentences(messages[0].Body))
 		return Base._get_sentences(messages[0].Body)
 
 	def read_last_email_from(self, sender_address):
@@ -26,7 +23,6 @@ class ReaderKeywords(Base):
 		messages.Sort("[ReceivedTime]", True)
 		for mail in messages:
 			if sender_address == mail.SenderEmailAddress:
-				# print(Base._get_sentences(mail.Body))
 				return Base._get_sentences(mail.Body)
 		return None
 
@@ -37,11 +33,7 @@ class ReaderKeywords(Base):
 		last_subject = Base._get_sentences(messages[0].Subject)
 		last_subject = last_subject[0]
 		if last_subject != subject:
-			#raise AssertionError(subject + str("!=") + last_subject)
 			raise AssertionError("Subject of last received mail is: '" + last_subject + "', not '" + subject + "'!")
-		#TODO logger
-		# else:
-		# 	print(subject + str("==") + last_subject)
 
 	def last_sent_subject_should_be(self, subject):
 		sent_folder = Base._get_sent_folder()
@@ -50,30 +42,20 @@ class ReaderKeywords(Base):
 		last_subject = Base._get_sentences(messages[0].Subject)
 		last_subject = last_subject[0]
 		if last_subject != subject:
-			#raise AssertionError(subject + str("!=") + last_subject)
 			raise AssertionError("Subject of last sent mail is: '" + last_subject + "', not '" + subject + "'!")
-		#TODO logger
-		# else:
-		# 	print(subject + str("==") + last_subject)
 
 	def get_email(self, sender, subject, date_from, date_to):
 		try:
-			#date_from = datetime.date(date_from)
 			datetime_from = datetime.datetime.strptime(date_from, '%Y.%m.%d')
 		except Exception:
-			#print("Exception: :" + e.__class__.__name__)
-			#raise ValueError("The date_from parameter is not valid in Get Email keyword!")
-			raise ValueError(str(date_from) + "does not match format '%Y.%m.%d'")
+			raise ValueError(str(date_from) + "Does not match format '%Y.%m.%d'")
 		if date_to is None:
 			datetime_to = datetime.datetime.now()
 		else:
 			try:
 				datetime_to = datetime.datetime.strptime(date_to, '%Y.%m.%d') + datetime.timedelta(days=1)
 			except Exception:
-				#print("Exception: :" + e.__class__.__name__)
-				#raise ValueError("The date_to parameter is not valid in Get Email keyword!")
-				#raise ValueError(str(date_to) + "does not match format '%Y.%m.%d'")
-				raise ValueError(str(date_to) + "does not match format '%Y.%m.%d'")
+				raise ValueError(str(date_to) + "Does not match format '%Y.%m.%d'")
 		inbox = Base._get_inbox_folder()
 		messages = inbox.Items
 		messages.Sort("[ReceivedTime]", True)
@@ -81,12 +63,7 @@ class ReaderKeywords(Base):
 		messages = messages.Restrict("[ReceivedTime] < '" + datetime_to.strftime('%m/%d/%Y %H:%M %p') + "'")
 		for mail in messages:
 			if mail.Subject == subject and mail.SenderEmailAddress == sender:
-				#print("get_mail: ", mail.Subject, mail.SenderEmailAddress, mail.ReceivedTime )
 				return mail
-			#print(mail.Subject, mail.ReceivedTime)
-		#if sender_address == mail.SenderEmailAddress:
-		#	print(Base._get_sentences(mail.Body))
-		#	return Base._get_sentences(mail.Body)
 		return None
 
 	def save_attachments(self, email, save_folder):

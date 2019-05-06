@@ -7,9 +7,6 @@ from ..exception import *
 
 class LoginKeywords(Base):
 
-	def login1(self):
-		print("login1")
-
 	def should_be_logged_in_to_outlook(self, email_address):
 		app = Base._get_outlook_app()
 		accounts = app.Session.Accounts

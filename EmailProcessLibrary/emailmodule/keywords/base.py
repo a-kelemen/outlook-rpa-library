@@ -3,7 +3,6 @@
 from __future__ import absolute_import, division, generators, print_function, unicode_literals
 import win32com.client as win32
 
-#from emailProcessLibrary.emailmodule import OutlookException
 from .exception import *
 import os
 from robot.libraries.BuiltIn import BuiltIn, RobotNotRunningError
@@ -19,9 +18,6 @@ class Email(object):
 
 	def send(self, to, outlook_app):
 		new_mail = outlook_app.CreateItem(0)
-		# pontosvesszovel kell elvalasztani ha tobb nev is van elvileg
-		#https: // stackoverflow.com / questions / 22681903 / send - email - to - multiple - recipients - using - win32com - module - in -python
-		#newMail.To = 'Amy; john; sandy'
 		if type(to) is list:
 			to = ";".join(to)
 		new_mail.To = to
@@ -41,10 +37,8 @@ class Base(object):
 		try:
 			outlook_app = win32.Dispatch('outlook.application')
 			return outlook_app
-		except Exception as e:
-			#TODO exception
-			print("Exception: :" + e.__class__.__name__)
-			raise OutlookException("Nincs futo, bejelentkezett outlook alkalmazas!")
+		except Exception:
+			raise OutlookException("Outlook application not found!")
 
 	@staticmethod
 	def _get_inbox_folder():
@@ -52,7 +46,6 @@ class Base(object):
 		mapi = app.GetNamespace("MAPI")
 		folders = mapi.Folders.Item(1)
 		inbox = folders.Folders[1]
-		#print(inbox.Name)
 		return inbox
 
 	@staticmethod
@@ -61,7 +54,6 @@ class Base(object):
 		mapi = app.GetNamespace("MAPI")
 		folders = mapi.Folders.Item(1)
 		sent = folders.Folders[3]
-		#print("---:" + sent.Name)
 		return sent
 
 	@staticmethod
@@ -72,11 +64,9 @@ class Base(object):
 	@staticmethod
 	def send(address):
 		outlook_app = Base._get_outlook_app()
-		#app = win32.Dispatch('outlook.application')
 		new_mail = outlook_app.CreateItem(0)
 		new_mail.Body = Base.email.text
 		new_mail.Subject = Base.email.subject
-		#print("address: " + address)
 		new_mail.To = address
 		if Base.email.attachment is not None:
 			for attachment in Base.email.attachment:

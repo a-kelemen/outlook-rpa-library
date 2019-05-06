@@ -42,10 +42,6 @@ class EmailProcessLibrary(object):
 
 	This is a complete example for sending an email.
 
-
-	``kiemeles``  `link`(neha kiemeles?)
-
-
 	| `Click Element` | example | # Match based on ``id`` or ``name``.            |
 	| `Click Link`    | example | # Match also based on link text and ``href``.   |
 	| `Click Button`  | example | # Match based on ``id``, ``name`` or ``value``. |
@@ -53,7 +49,6 @@ class EmailProcessLibrary(object):
 	__version__ = '0.1.0'
 
 	ROBOT_LIBRARY_SCOPE = 'GLOBAL'
-	#TODO nem global kell hogy minden subprocessben uj email tudjunk csinalni. de lehett hogy global is jo
 	ROBOT_LIBRARY_VERSION = __version__
 
 	def __init__(self):
@@ -198,8 +193,11 @@ class EmailProcessLibrary(object):
 		Returns an email.
 
 		- ``sender`` : The address of the sender.
+
 		- ``subject`` : The subject of the mail.
+
 		- ``date_from`` : Starting point of the time interval. Default value is 2000.01.01.
+
 		- ``date_to`` : Endpoint of the time interval. Default value is today.
 
 		``sender`` and ``subject`` parameters are mandatory.

@@ -14,20 +14,15 @@ class SenderKeywords(Base):
 
 	def set_email_text(self, *sentences):
 		if Base.email is not None:
-			#Base.email.text = " ".join(["as", "sadfsa"])
-			#print(sentences)
 			Base.email.text = "\n".join(sentences)
-			#print("email.text: ")
-			#print(Base.email.text)
-			#pass
 		else:
-			raise EmailNotFoundException("Use Create New Email first!")
+			raise EmailNotFoundException("Use 'Create New Email' keyword first!")
 
 	def set_email_subject(self, subject):
 		if Base.email is not None:
 			Base.email.subject = subject
 		else:
-			raise EmailNotFoundException("Use Create New Email first!")
+			raise EmailNotFoundException("Use 'Create New Email' keyword first!")
 
 	def add_attachment(self, paths):
 		attachments = []
@@ -36,14 +31,12 @@ class SenderKeywords(Base):
 			if os.path.isfile(full_path):
 				attachments.append(full_path)
 			else:
-				#TODO exception szoveg
-				raise FileNotFoundException("invalid path")
+				raise FileNotFoundException("Invalid path! File not found!")
 			if Base.email is not None:
 				Base.email.attachment = attachments
 			else:
-				raise EmailNotFoundException("Use Create New Email first!")
+				raise EmailNotFoundException("Use 'Create New Email' keyword first!")
 
 	def send_email_to(self, address):
-		#if type(address) is tuple:
 		address = ";".join(address)
 		Base.send(address)
