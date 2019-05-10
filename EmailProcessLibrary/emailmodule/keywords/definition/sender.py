@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, generators, print_function, un
 from ..base import Base, Email
 import os
 from ..exception import *
-import win32com.client as win32
+import numbers
 
 
 class SenderKeywords(Base):
@@ -13,6 +13,7 @@ class SenderKeywords(Base):
 		Base.email = Email()
 
 	def set_email_text(self, *sentences):
+		sentences = [str(_) if (isinstance(_, numbers.Number)) else _ for _ in sentences]
 		if Base.email is not None:
 			Base.email.text = "\n".join(sentences)
 		else:

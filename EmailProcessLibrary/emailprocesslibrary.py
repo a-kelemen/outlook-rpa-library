@@ -8,11 +8,8 @@ from .emailmodule.keywords.definition.sender import SenderKeywords
 
 
 def keyword(name=None):
-	#TODO ebbe az kell, hogy lefuttassa a keywordot, es ha sikres, akkor kiir valamit hogy sikeres hogy legyen
-	#valami haszna
 	if callable(name):
 		logger.warn(str(name))
-		#logger.warn("csaxsa")
 		return keyword()(name)
 
 	def _method_wrapper(func):
@@ -20,17 +17,12 @@ def keyword(name=None):
 		return func
 	return _method_wrapper
 
-#TODO mi van ha tobb bejelentkezett felhasznalo van
-#TODO ha nem vagyok bejelentkezve, akkor kiirja  hibat?
-#TODO mas outlookon is mukodik?
-
 
 class EmailProcessLibrary(object):
-	"""EmailProcessLibrary is a process automation library for Robot Framework.
+	"""EmailProcessLibrary is an Outlook automation library for Robot Framework.
 
-	Par keyword az outlook app automatizalasara windowson. Szoval kell hogy legyen aoutlook és
-	egy bejelentkezett felhasznalo. Ha nics bejelentkezve akkor nem mukodik. Login keyword nincs mert akkor
-	a password nem lenne biztonsagos.
+	For using the library logged in Outlook user is needed.
+	Because of this and for safety reasons there is no keyword for login.
 
 	== Table of contents ==
 
@@ -42,9 +34,20 @@ class EmailProcessLibrary(object):
 
 	This is a complete example for sending an email.
 
-	| `Click Element` | example | # Match based on ``id`` or ``name``.            |
-	| `Click Link`    | example | # Match also based on link text and ``href``.   |
-	| `Click Button`  | example | # Match based on ``id``, ``name`` or ``value``. |
+	| `Create New Email`                    |                         |
+	| `Set Email Subject`                   | die Roboter             |
+	| `Set Email Text`                      |                         |
+	| ... Wir funktionieren automatik       |                         |
+	| ... Jetzt wollen wir tanzen mechanik  |                         |
+	| ... Wir sind auf alles programmiert   |                         |
+	| ... Und was du willst wird ausgeführt |                         |
+	| ... Wir sind die Roboter              |                         |
+	| ... Wir sind die Roboter              |                         |
+	| `Add Attachment`                      | robot_files/roboter.jpg |
+	| `Send Email To`                       |                         |
+	| ... ralf@kraftwerk.de                 |                         |
+	| ... florian@kraftwerk.de              |                         |
+
 	"""
 	__version__ = '0.1.0'
 
@@ -193,11 +196,8 @@ class EmailProcessLibrary(object):
 		Returns an email.
 
 		- ``sender`` : The address of the sender.
-
 		- ``subject`` : The subject of the mail.
-
 		- ``date_from`` : Starting point of the time interval. Default value is 2000.01.01.
-
 		- ``date_to`` : Endpoint of the time interval. Default value is today.
 
 		``sender`` and ``subject`` parameters are mandatory.
