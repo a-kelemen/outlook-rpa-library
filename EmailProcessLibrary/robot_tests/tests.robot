@@ -90,7 +90,6 @@ Get Email Subject
 
 Get Email Time
     [Tags]                   Get Email Time  Get Email
-    #TODO string date
     ${mail}=                 Get Email  kelemenandras11@outlook.com  test_subject  2019.03.10  2019.03.10
     ${date}=                 Get Email Time  ${mail}
     ${python_version}=       Evaluate  sys.version_info[0]  modules=sys

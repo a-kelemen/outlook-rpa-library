@@ -11,8 +11,7 @@ from EmailProcessLibrary.emailmodule.keywords.base import Base
 import random
 import time
 
-# TODO test email cim
-# TODO normalis fajok
+
 class TestReaderKeywords(unittest.TestCase):
 
 	def __init__(self, *args, **kwargs):
