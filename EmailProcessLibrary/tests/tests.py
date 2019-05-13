@@ -78,7 +78,6 @@ class TestReaderKeywords(unittest.TestCase):
 		"""Save Attachments"""
 		mail = self.emailLib.get_email("kelemenandras11@outlook.com", "csatolmany", "2019.02.27", "2019.02.27")
 		self.assertIsNotNone(mail)
-		#print(os.path.dirname(__file__))
 		self.emailLib.save_attachments(mail, "save_folder")
 		save_folder = os.path.join(os.path.dirname(__file__), "save_folder")
 		saved_attachment = os.path.join(save_folder, "Untitled Diagram.png")
