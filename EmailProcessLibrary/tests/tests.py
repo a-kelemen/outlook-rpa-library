@@ -41,7 +41,7 @@ class TestReaderKeywords(unittest.TestCase):
 
 	def test_read_email_from_non_existing(self):
 		"""Read Last Email From"""
-		mail = self.emailLib.read_last_email_from("nincsilyen@outlook.com")
+		mail = self.emailLib.read_last_email_from("non_existing@outlook.com")
 		self.assertIsNone(mail)
 
 	def test_last_received_subject_should_be(self):
@@ -56,12 +56,12 @@ class TestReaderKeywords(unittest.TestCase):
 
 	def test_get_email_non_existing(self):
 		"""Get Email"""
-		mail = self.emailLib.get_email("asd", "asd", "2019.01.01", None)
+		mail = self.emailLib.get_email("non_existing", "non_existing", "2019.01.01", None)
 		self.assertIsNone(mail)
 
 	def test_get_email_non_existing_2(self):
 		"""Get Email"""
-		mail = self.emailLib.get_email("asd", "asd", "2000.01.01", "2019.01.01")
+		mail = self.emailLib.get_email("non_existing", "non_existing", "2000.01.01", "2019.01.01")
 		self.assertIsNone(mail)
 
 	def test_get_email_between_dates(self):
